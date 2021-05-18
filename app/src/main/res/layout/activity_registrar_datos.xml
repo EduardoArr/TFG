@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Vista.RegistrarDatosActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgAñadirFotoEquipo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="152dp"
+        android:layout_marginLeft="152dp"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/ic_baseline_add_a_photo_24"
+        app:civ_border_color="@color/white"
+        app:civ_border_overlay="true"
+        app:civ_border_width="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/spPuesto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.232"
+        tools:ignore="MissingConstraints" />
+
+
+    <Spinner
+        android:id="@+id/spPuesto"
+        android:layout_width="306dp"
+        android:layout_height="35dp"
+        android:background="@drawable/forma_rectangulo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spTipo"
+        app:layout_constraintVertical_bias="0.277" />
+
+    <Spinner
+        android:id="@+id/spTipo"
+        android:layout_width="306dp"
+        android:layout_height="35dp"
+        android:background="@drawable/forma_rectangulo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgAñadirFotoEquipo"
+        app:layout_constraintVertical_bias="0.148" />
+
+    <Spinner
+        android:id="@+id/spEdificio"
+        android:layout_width="306dp"
+        android:layout_height="35dp"
+        android:background="@drawable/forma_rectangulo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spTipo"
+        app:layout_constraintVertical_bias="0.024" />
+
+    <Spinner
+        android:id="@+id/spAula"
+        android:layout_width="306dp"
+        android:layout_height="35dp"
+        android:background="@drawable/forma_rectangulo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spTipo"
+        app:layout_constraintVertical_bias="0.155" />
+
+    <Button
+        android:id="@+id/btnCrearEquipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:text="@string/strGuardarRegistro"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spPuesto"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

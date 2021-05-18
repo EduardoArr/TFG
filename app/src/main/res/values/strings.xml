@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Gestor De Inventario</string>
+    <string name="title_activity_scrolling">Gestor De Inventario</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="strRegistrarEquipo">Registrar Equipo</string>
+    <string name="strMostrarDatos">Mostrar Datos</string>
+    <string name="strCerrarSesion">Cerrar Sesión</string>
+    <string name="strTitulo">Gestión De Inventario</string>
+    <string name="strGuardarRegistro">Registrar</string>
+</resources>

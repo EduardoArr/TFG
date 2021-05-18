@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="arrayTipo">
+        <item>Ordenador</item>
+        <item>Pantalla</item>
+        <item>Canon</item>
+        <item>Teclado</item>
+        <item>Raton</item>
+    </string-array>
+
+    <string-array name="arrayEdificio">
+        <item>Edificio 1</item>
+        <item>Edificio 2</item>
+        <item>Edificio3</item>
+    </string-array>
+
+    <string-array name="arrayAula">
+        <item>Aula 1</item>
+        <item>Aula 2</item>
+        <item>Aula 3</item>
+        <item>Aula 4</item>
+        <item>Aula 5</item>
+        <item>Aula 6</item>
+        <item>Aula 7</item>
+        <item>Aula 8</item>
+        <item>Aula 9</item>
+        <item>Aula 10</item>
+        <item>Aula 11</item>
+        <item>Aula 12</item>
+    </string-array>
+
+    <string-array name="arrayPuesto">
+        <item>Puesto 1</item>
+        <item>Puesto 2</item>
+        <item>Puesto 3</item>
+        <item>Puesto 4</item>
+        <item>Puesto 5</item>
+        <item>Puesto 6</item>
+        <item>Puesto 7</item>
+        <item>Puesto 8</item>
+        <item>Puesto 9</item>
+        <item>Puesto 10</item>
+    </string-array>
+
+</resources>
