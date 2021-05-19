@@ -88,7 +88,8 @@ public class EquipoAdapter extends BaseAdapter {
 
             //Almacenamos los datos en un String.
             String strtipo = equipo.getTipo();
-             id = equipo.getCodigo();
+            id = equipo.getCodigo();
+            String strfecha = equipo.getFecha();
             String imagen = equipo.getUrl();
             String strAula = equipo.getAula();
             String strEdificio = equipo.getEdificio();
@@ -97,14 +98,14 @@ public class EquipoAdapter extends BaseAdapter {
             btnOpciones.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mostrarOpcionesDialogo(imagen, id, strtipo, strAula, strEdificio, strPuesto);
+                    mostrarOpcionesDialogo(imagen, id, strtipo, strAula, strEdificio, strPuesto, strfecha);
                 }
             });
             return convertView;
         }
 
     //Hacemos un método para mostrar el diálogo del botón de editar y borrar
-    public void mostrarOpcionesDialogo(final String imagen, final String id_equipo, final String tipo, final String aula, final String edificio, final String puesto){
+    public void mostrarOpcionesDialogo(final String imagen, final String id_equipo, final String tipo, final String aula, final String edificio, final String puesto, final String fecha){
 
         //Creamos un array de Strings con las opciones que van a aparecer en el diálogo
 
@@ -126,7 +127,7 @@ public class EquipoAdapter extends BaseAdapter {
                     intent.putExtra("puesto", puesto);
                     intent.putExtra("aula", aula);
                     intent.putExtra("edificio", edificio);
-
+                    intent.putExtra("fecha_captura", fecha);
 
                     intent.putExtra("imagen", imagen);
                     //Añadimos otro dato para saber si viene de editar

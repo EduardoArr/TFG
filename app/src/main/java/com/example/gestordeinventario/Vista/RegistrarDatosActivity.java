@@ -64,7 +64,7 @@ public class RegistrarDatosActivity extends AppCompatActivity {
     private String fecha_captura;
     Uri uri;
     boolean editar;
-    String txt_tipo, txt_aula, txt_puesto, txt_edificio, txt_imagen, txt_id;
+    String txt_tipo, txt_aula, txt_puesto, txt_edificio, txt_imagen, txt_id, txt_fecha;
 
     private Bitmap bitmap;
 
@@ -101,19 +101,6 @@ public class RegistrarDatosActivity extends AppCompatActivity {
         spPuesto = findViewById(R.id.spPuesto);
         fecha_captura = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-        btnRegistrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadImage();
-            }
-        });
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarOpcionesImagen();
-            }
-        });
-
         //Inicializamos los arrays de permisos
         cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -123,6 +110,23 @@ public class RegistrarDatosActivity extends AppCompatActivity {
         FCargarArraySpinner();
         FEsEditar();
 
+
+        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!editar){
+                    uploadImage();
+                }else{
+                    FEditarEquipo("http://192.168.11.71/inventario/editar_equipo.php");
+                }
+            }
+        });
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarOpcionesImagen();
+            }
+        });
     }
 
     private void FEsEditar(){
@@ -142,6 +146,7 @@ public class RegistrarDatosActivity extends AppCompatActivity {
             txt_puesto = bundle.getString("puesto");
             txt_edificio = bundle.getString("edificio");
             txt_imagen = bundle.getString("imagen");
+            txt_fecha = bundle.getString("fecha_captura");
 
             //y los muestro
 
@@ -359,26 +364,60 @@ public class RegistrarDatosActivity extends AppCompatActivity {
                 String puesto = spPuesto.getItemAtPosition(spPuesto.getSelectedItemPosition()).toString();
                 String fecha = fecha_captura;
 
-                //Creación de parámetros
-                Map<String,String> params = new Hashtable<String, String>();
+                    //Creación de parámetros
+                    Map<String,String> params = new Hashtable<String, String>();
 
-                //Agregando de parámetros
-                params.put(KEY_IMAGEN, imagen);
-                params.put(KEY_TIPO, tipo);
-                params.put(KEY_EDIFICIO, edificio);
-                params.put(KEY_AULA, aula);
-                params.put(KEY_PUESTO, puesto);
-                params.put(KEY_FECHA, fecha);
+                    //Agregando de parámetros
+                    params.put(KEY_IMAGEN, imagen);
+                    params.put(KEY_TIPO, tipo);
+                    params.put(KEY_EDIFICIO, edificio);
+                    params.put(KEY_AULA, aula);
+                    params.put(KEY_PUESTO, puesto);
+                    params.put(KEY_FECHA, fecha);
 
-                //Parámetros de retorno
-                return params;
-            }
+                    //Parámetros de retorno
+                    return params;
+                }
         };
 
         //Creación de una cola de solicitudes
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         //Agregar solicitud a la cola
+        requestQueue.add(stringRequest);
+    }
+
+    //Función que comprueba que el usuario y la contraseña esta correcto y si está correcto nos muestra el formulario principal.
+    private void FEditarEquipo(String URL){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(RegistrarDatosActivity.this, "EQUIPO ELIMINADO CORRECTAMENTE", Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(RegistrarDatosActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //Creación de parámetros
+                Map<String,String> params = new Hashtable<String, String>();
+
+                //Agregando de parámetros
+                params.put(KEY_IMAGEN, txt_imagen);
+                params.put(KEY_TIPO, txt_tipo);
+                params.put(KEY_EDIFICIO, txt_edificio);
+                params.put(KEY_AULA, txt_aula);
+                params.put(KEY_PUESTO, txt_puesto);
+                params.put(KEY_FECHA, txt_fecha);
+
+                //Parámetros de retorno
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(RegistrarDatosActivity.this);
         requestQueue.add(stringRequest);
     }
 
@@ -457,12 +496,15 @@ public class RegistrarDatosActivity extends AppCompatActivity {
     }
 
 
+
+
     //Función para cambiar el nombre del ActionBar y mostrar una opción de regreso al anterior activity
     public void FActionBar(){
         actionBar = getSupportActionBar();
         actionBar.setTitle("Registrar Equipo Nuevo");
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
+
     }
 
     //Función para que desde el ActionBar te vaya a la actividad anterior

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,12 +22,14 @@ import com.example.gestordeinventario.R;
 
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class RegistroActivity extends AppCompatActivity {
 
     //Variables
     EditText edtUsua;
     EditText edtPassw;
+    EditText edtConfirmPass;
     Button btnRegistrarNuevo;
     ActionBar actionBar;
 
@@ -41,6 +44,8 @@ public class RegistroActivity extends AppCompatActivity {
 
         edtUsua = findViewById(R.id.edtRegistrarUsuario);
         edtPassw = findViewById(R.id.edtRegistrarContra);
+        btnRegistrarNuevo = findViewById(R.id.btnRegistrarNuevo);
+        edtConfirmPass = findViewById(R.id.edtConfirmarContra);
 
         FActionBar();
 
@@ -55,53 +60,91 @@ public class RegistroActivity extends AppCompatActivity {
 
     //Función que sube los datos al servidor.
     private void FSubirUsuario(){
-        //Mostrar el diálogo de progreso
-        final ProgressDialog loading = ProgressDialog.show(this,"REGISTRANDO...","Espere por favor...",false,false);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String s) {
-                        //Descartar el diálogo de progreso
-                        loading.dismiss();
-                        //Mostrando el mensaje de la respuesta
-                        Toast.makeText(RegistroActivity.this, s , Toast.LENGTH_LONG).show();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        //Descartar el diálogo de progreso
-                        loading.dismiss();
 
-                        //Showing toast
-                        Toast.makeText(RegistroActivity.this, volleyError.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+        if (FComprobarErroresRegistro()) {
 
-                String email = edtUsua.getText().toString();
-                String password = edtPassw.getText().toString();
+            //Mostrar el diálogo de progreso
+            final ProgressDialog loading = ProgressDialog.show(this,"REGISTRANDO...","Espere por favor...",false,false);
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
 
-                //Creación de parámetros
-                Map<String,String> params = new Hashtable<String, String>();
+                            //Descartar el diálogo de progreso
+                            loading.dismiss();
+                            //Mostrando el mensaje de la respuesta
+                            Toast.makeText(RegistroActivity.this, s , Toast.LENGTH_LONG).show();
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            //Descartar el diálogo de progreso
+                            loading.dismiss();
 
-                //Agregando de parámetros
-                params.put(KEY_USUARIO, email);
-                params.put(KEY_CONTRASEÑA, password);
+                            //Showing toast
+                            Toast.makeText(RegistroActivity.this, volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
 
-                //Parámetros de retorno
-                return params;
-            }
-        };
+                    String email = edtUsua.getText().toString();
+                    String password = edtPassw.getText().toString();
 
-        //Creación de una cola de solicitudes
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        //Agregar solicitud a la cola
-        requestQueue.add(stringRequest);
+                    //Creación de parámetros
+                    Map<String,String> params = new Hashtable<String, String>();
+
+                    //Agregando de parámetros
+                    params.put(KEY_USUARIO, email);
+                    params.put(KEY_CONTRASEÑA, password);
+
+                    //Parámetros de retorno
+                    return params;
+                }
+            };
+
+            //Creación de una cola de solicitudes
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+            //Agregar solicitud a la cola
+            requestQueue.add(stringRequest);
+
+        }
+
     }
 
+    private boolean validarEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
+    }
+
+    //Función para comprobar los errrores de registro.
+    private boolean FComprobarErroresRegistro(){
+
+        String confirmarPass = edtConfirmPass.getText().toString();
+        String password = edtPassw.getText().toString();
+        String email = edtUsua.getText().toString();
+
+        if(!password.equals(confirmarPass)) {
+            Toast.makeText(RegistroActivity.this, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(password.length() < 6 || confirmarPass.length() < 6){
+            Toast.makeText(RegistroActivity.this, "La contraseña tiene que tener mínimo 6 dígitos", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(!validarEmail(email)){
+            Toast.makeText(RegistroActivity.this, "Email no valido", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        //sin errores
+        return true;
+    }
 
 
     //Función para cambiar el nombre del ActionBar y mostrar una opción de regreso al anterior activity

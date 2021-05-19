@@ -6,49 +6,62 @@
     android:layout_height="match_parent"
     tools:context=".Vista.RegistroActivity">
 
+    <EditText
+        android:id="@+id/edtConfirmarContra"
+        android:layout_width="337dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="108dp"
+        android:backgroundTint="@android:color/darker_gray"
+        android:drawableLeft="@drawable/icon_lock"
+        android:ems="10"
+        android:hint="Confirmar Contraseña"
+        android:inputType="textPassword"
+        android:paddingLeft="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtRegistrarUsuario" />
+
     <Button
         android:id="@+id/btnRegistrarNuevo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_width="288dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="228dp"
         android:background="#1976d2"
         android:text="REGISTRARSE"
         android:textColor="#FFF"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtRegistrarContra" />
 
     <EditText
         android:id="@+id/edtRegistrarContra"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="337dp"
+        android:layout_height="52dp"
         android:layout_marginTop="24dp"
         android:backgroundTint="@android:color/darker_gray"
         android:drawableLeft="@drawable/icon_lock"
         android:ems="10"
-        android:hint="Password"
+        android:hint="Contraseña"
         android:inputType="textPassword"
         android:paddingLeft="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtRegistrarUsuario" />
 
     <EditText
         android:id="@+id/edtRegistrarUsuario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="337dp"
+        android:layout_height="52dp"
         android:layout_marginTop="80dp"
         android:backgroundTint="@android:color/darker_gray"
         android:drawableLeft="@drawable/icon_email"
         android:ems="10"
         android:hint="Usuario"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:paddingLeft="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -56,14 +69,14 @@
         android:id="@+id/textView"
         android:layout_width="240dp"
         android:layout_height="54dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="72dp"
         android:gravity="center"
         android:text="REGISTRAR"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="#1976d2"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
