@@ -39,6 +39,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gestordeinventario.R;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -62,6 +63,8 @@ public class RegistrarDatosActivity extends AppCompatActivity {
     private Spinner spPuesto;
     private String fecha_captura;
     Uri uri;
+    boolean editar;
+    String txt_tipo, txt_aula, txt_puesto, txt_edificio, txt_imagen, txt_id;
 
     private Bitmap bitmap;
 
@@ -118,6 +121,81 @@ public class RegistrarDatosActivity extends AppCompatActivity {
         //Funciones
         FActionBar();
         FCargarArraySpinner();
+        FEsEditar();
+
+    }
+
+    private void FEsEditar(){
+
+        Bundle bundle = getIntent().getExtras();
+        editar = bundle.getBoolean("REQUEST_EDICION");
+        Log.i("EDITAR", "" + editar);
+
+        if (editar) {
+            //cambiamos el título del ActionBar
+            actionBar.setTitle("Editar Equipo");
+
+            //si viene de editar cojo los datos del libro
+            txt_id = bundle.getString("id");
+            txt_tipo = bundle.getString("tipo");
+            txt_aula = bundle.getString("aula");
+            txt_puesto = bundle.getString("puesto");
+            txt_edificio = bundle.getString("edificio");
+            txt_imagen = bundle.getString("imagen");
+
+            //y los muestro
+
+            ArrayAdapter<CharSequence> Tipoadapter = ArrayAdapter.createFromResource(this,
+                    R.array.arrayTipo, android.R.layout.simple_spinner_item);
+
+            // Especificar el layout que vamos a usar cuando pinchemos en  el spinner
+            Tipoadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            // Aplicamos el adaptador en el spinner
+            spTipo.setAdapter(Tipoadapter);
+
+            //Cargamos los datos de la bd en el spinner
+            int intTipo = Tipoadapter.getPosition(txt_tipo);
+            spTipo.setSelection(intTipo);
+
+            ArrayAdapter<CharSequence> Edificioadapter = ArrayAdapter.createFromResource(this,
+                    R.array.arrayEdificio, android.R.layout.simple_spinner_item);
+            Edificioadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spEdificio.setAdapter(Edificioadapter);
+
+            //Cargamos los datos de la bd en el spinner
+            int intEdificio = Tipoadapter.getPosition(txt_edificio);
+            spEdificio.setSelection(intEdificio);
+
+            ArrayAdapter<CharSequence> Aulaadapter = ArrayAdapter.createFromResource(this,
+                    R.array.arrayAula, android.R.layout.simple_spinner_item);
+            Aulaadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spAula.setAdapter(Aulaadapter);
+
+            //Cargamos los datos de la bd en el spinner
+            int intAula = Tipoadapter.getPosition(txt_aula);
+            spAula.setSelection(intAula);
+
+            ArrayAdapter<CharSequence> Puestoadapter = ArrayAdapter.createFromResource(this,
+                    R.array.arrayPuesto, android.R.layout.simple_spinner_item);
+            Puestoadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spPuesto.setAdapter(Puestoadapter);
+
+            //Cargamos los datos de la bd en el spinner
+            int intPuesto = Tipoadapter.getPosition(txt_puesto);
+            spPuesto.setSelection(intPuesto);
+
+            if (txt_imagen == null) {
+                imageView.setImageResource(R.drawable.ic_baseline_add_a_photo_24);
+                //Cuando pinchamos en agregar imagen de libro
+
+            } else {
+                imageView.setImageURI(uri);
+            }
+        } else {
+            //cambiamos el título dek ActionBar
+            actionBar.setTitle("Registrar Equipo Nuevo");
+        }
 
     }
 

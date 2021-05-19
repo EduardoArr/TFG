@@ -8,8 +8,10 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,13 +57,14 @@ public class MostrarDatosActivity extends AppCompatActivity {
 
     ImageView imagen;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostrar_datos);
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        final ListView lv= (ListView) findViewById(R.id.lvEquipos);
+        final ListView lv = findViewById(R.id.lvEquipos);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

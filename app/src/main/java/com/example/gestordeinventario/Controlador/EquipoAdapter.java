@@ -15,16 +15,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gestordeinventario.R;
+import com.example.gestordeinventario.Vista.IniciarSesionActivity;
+import com.example.gestordeinventario.Vista.MostrarDatosActivity;
 import com.example.gestordeinventario.Vista.RegistrarDatosActivity;
+import com.example.gestordeinventario.Vista.ScrollingActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EquipoAdapter extends BaseAdapter {
 
@@ -32,6 +40,7 @@ public class EquipoAdapter extends BaseAdapter {
         Context c;
         ArrayList<Equipo> equipos;
         LayoutInflater inflater;
+        String id;
 
         //Constructor
         public EquipoAdapter(Context c, ArrayList<Equipo> equipos) {
@@ -79,7 +88,7 @@ public class EquipoAdapter extends BaseAdapter {
 
             //Almacenamos los datos en un String.
             String strtipo = equipo.getTipo();
-            String id = equipo.getCodigo();
+             id = equipo.getCodigo();
             String imagen = equipo.getUrl();
             String strAula = equipo.getAula();
             String strEdificio = equipo.getEdificio();
@@ -95,7 +104,7 @@ public class EquipoAdapter extends BaseAdapter {
         }
 
     //Hacemos un método para mostrar el diálogo del botón de editar y borrar
-    public void mostrarOpcionesDialogo(final String imagen, final String id, final String tipo, final String aula, final String edificio, final String puesto){
+    public void mostrarOpcionesDialogo(final String imagen, final String id_equipo, final String tipo, final String aula, final String edificio, final String puesto){
 
         //Creamos un array de Strings con las opciones que van a aparecer en el diálogo
 
@@ -112,7 +121,7 @@ public class EquipoAdapter extends BaseAdapter {
                     //Si clickamos en Editar vamos a la Actividad de Add_Libro para poder editar los datos
                     //le tenemos que mandar todos los datos que tiene ese libro para que los muestre
                     Intent intent = new Intent(c, RegistrarDatosActivity.class);
-                    intent.putExtra("id", id);
+                    intent.putExtra("id", id_equipo);
                     intent.putExtra("tipo", tipo);
                     intent.putExtra("puesto", puesto);
                     intent.putExtra("aula", aula);
@@ -133,7 +142,7 @@ public class EquipoAdapter extends BaseAdapter {
                     eliminarDialogo.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            FBorrarEquipo("http://192.168.11.71/inventario/borrar_equipo.php");
                         }
                     });
                     eliminarDialogo.setNegativeButton("No", null);
@@ -147,6 +156,33 @@ public class EquipoAdapter extends BaseAdapter {
         builder.create().show();
 
     }
+
+    //Función que comprueba que el usuario y la contraseña esta correcto y si está correcto nos muestra el formulario principal.
+    private void FBorrarEquipo(String URL){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(c, "EQUIPO ELIMINADO CORRECTAMENTE", Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(c, error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //Recojo los datos de los edit text y los cargo en un HashMap como parámetros para comprobar que el usuario existe.
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("id_equipo", id);
+                return parametros;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(c);
+        requestQueue.add(stringRequest);
+    }
+
+
 
     }
 

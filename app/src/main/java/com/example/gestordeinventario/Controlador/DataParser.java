@@ -61,6 +61,7 @@ import java.util.ArrayList;
                 {
                     jo=ja.getJSONObject(i);
                     String tipo =jo.getString("tipo");
+                    String id_equipo = jo.getString("id_equipo");
                     String edificio =jo.getString("edificio");
                     String aula =jo.getString("aula");
                     String puesto =jo.getString("puesto");
@@ -70,6 +71,7 @@ import java.util.ArrayList;
                     equipo =new Equipo();
 
                     equipo.setEdificio(edificio);
+                    equipo.setCodigo(id_equipo);
                     equipo.setAula(aula);
                     equipo.setPuesto(puesto);
                     equipo.setTipo(tipo);
