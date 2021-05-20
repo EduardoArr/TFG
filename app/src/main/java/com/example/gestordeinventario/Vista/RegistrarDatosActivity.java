@@ -150,44 +150,44 @@ public class RegistrarDatosActivity extends AppCompatActivity {
 
             //y los muestro
 
-            ArrayAdapter<CharSequence> Tipoadapter = ArrayAdapter.createFromResource(this,
+            ArrayAdapter<CharSequence> TipoAdapter = ArrayAdapter.createFromResource(this,
                     R.array.arrayTipo, android.R.layout.simple_spinner_item);
 
             // Especificar el layout que vamos a usar cuando pinchemos en  el spinner
-            Tipoadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            TipoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
             // Aplicamos el adaptador en el spinner
-            spTipo.setAdapter(Tipoadapter);
+            spTipo.setAdapter(TipoAdapter);
 
             //Cargamos los datos de la bd en el spinner
-            int intTipo = Tipoadapter.getPosition(txt_tipo);
+            int intTipo = TipoAdapter.getPosition(txt_tipo);
             spTipo.setSelection(intTipo);
 
-            ArrayAdapter<CharSequence> Edificioadapter = ArrayAdapter.createFromResource(this,
+            ArrayAdapter<CharSequence> EdificioAdapter = ArrayAdapter.createFromResource(this,
                     R.array.arrayEdificio, android.R.layout.simple_spinner_item);
-            Edificioadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spEdificio.setAdapter(Edificioadapter);
+            EdificioAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spEdificio.setAdapter(EdificioAdapter);
 
             //Cargamos los datos de la bd en el spinner
-            int intEdificio = Tipoadapter.getPosition(txt_edificio);
+            int intEdificio = EdificioAdapter.getPosition(txt_edificio);
             spEdificio.setSelection(intEdificio);
 
-            ArrayAdapter<CharSequence> Aulaadapter = ArrayAdapter.createFromResource(this,
+            ArrayAdapter<CharSequence> AulaAdapter = ArrayAdapter.createFromResource(this,
                     R.array.arrayAula, android.R.layout.simple_spinner_item);
-            Aulaadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spAula.setAdapter(Aulaadapter);
+            AulaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spAula.setAdapter(AulaAdapter);
 
             //Cargamos los datos de la bd en el spinner
-            int intAula = Tipoadapter.getPosition(txt_aula);
+            int intAula = AulaAdapter.getPosition(txt_aula);
             spAula.setSelection(intAula);
 
-            ArrayAdapter<CharSequence> Puestoadapter = ArrayAdapter.createFromResource(this,
+            ArrayAdapter<CharSequence> PuestoAdapter = ArrayAdapter.createFromResource(this,
                     R.array.arrayPuesto, android.R.layout.simple_spinner_item);
-            Puestoadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spPuesto.setAdapter(Puestoadapter);
+            PuestoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spPuesto.setAdapter(PuestoAdapter);
 
             //Cargamos los datos de la bd en el spinner
-            int intPuesto = Tipoadapter.getPosition(txt_puesto);
+            int intPuesto = PuestoAdapter.getPosition(txt_puesto);
             spPuesto.setSelection(intPuesto);
 
             if (txt_imagen == null) {
@@ -469,27 +469,28 @@ public class RegistrarDatosActivity extends AppCompatActivity {
     //Función para cargar todos los Array
         private void FCargarArraySpinner(){
         try {
-        ArrayAdapter<CharSequence> Tipoadapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> TipoAdapter = ArrayAdapter.createFromResource(this,
                 R.array.arrayTipo, android.R.layout.simple_spinner_item);
         // Especificar el layaut que vamos a usar cuando pinchemos en  el spinner
-        Tipoadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        TipoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Aplicamos el adaptador en el spinner
-        spTipo.setAdapter(Tipoadapter);
+        spTipo.setAdapter(TipoAdapter);
 
-        ArrayAdapter<CharSequence> Edificioadapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> EdificioAdapter = ArrayAdapter.createFromResource(this,
                 R.array.arrayEdificio, android.R.layout.simple_spinner_item);
-        Edificioadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spEdificio.setAdapter(Edificioadapter);
+        EdificioAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spEdificio.setAdapter(EdificioAdapter);
 
-        ArrayAdapter<CharSequence> Aulaadapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> AulaAdapter = ArrayAdapter.createFromResource(this,
                 R.array.arrayAula, android.R.layout.simple_spinner_item);
-        Aulaadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spAula.setAdapter(Aulaadapter);
+        AulaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAula.setAdapter(AulaAdapter);
 
-        ArrayAdapter<CharSequence> Puestoadapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> PuestoAdapter = ArrayAdapter.createFromResource(this,
                 R.array.arrayPuesto, android.R.layout.simple_spinner_item);
-        Puestoadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spPuesto.setAdapter(Puestoadapter);
+        PuestoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spPuesto.setAdapter(PuestoAdapter);
+
         }catch (Exception e){
             e.printStackTrace();
         }
