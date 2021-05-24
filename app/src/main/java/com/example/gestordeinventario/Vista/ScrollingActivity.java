@@ -49,6 +49,7 @@ public class ScrollingActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     FRegistrarEquipoIntent(null);
+
                 }
             }));
 
@@ -78,7 +79,9 @@ public class ScrollingActivity extends AppCompatActivity {
     private void FRegistrarEquipoIntent(View v){
         try {
             Intent intent = new Intent(this, RegistrarDatosActivity.class);
+            intent.putExtra("REQUEST_EDICION", false);
             startActivity(intent);
+
         }catch (Exception e){
             e.printStackTrace();
         }

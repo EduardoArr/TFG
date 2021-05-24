@@ -65,6 +65,7 @@ public class RegistrarDatosActivity extends AppCompatActivity {
     Uri uri;
     boolean editar;
     String txt_tipo, txt_aula, txt_puesto, txt_edificio, txt_imagen, txt_id, txt_fecha;
+    Bundle bundle;
 
     private Bitmap bitmap;
 
@@ -88,6 +89,8 @@ public class RegistrarDatosActivity extends AppCompatActivity {
     private String[] cameraPermissions;
     private String[] storagePermissions;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +107,10 @@ public class RegistrarDatosActivity extends AppCompatActivity {
         //Inicializamos los arrays de permisos
         cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        bundle = getIntent().getExtras();
+        editar = bundle.getBoolean("REQUEST_EDICION");
+        Log.i("EDITAR", "" + editar);
 
         //Funciones
         FActionBar();
@@ -130,11 +137,6 @@ public class RegistrarDatosActivity extends AppCompatActivity {
     }
 
     private void FEsEditar(){
-
-        Bundle bundle = getIntent().getExtras();
-        editar = bundle.getBoolean("REQUEST_EDICION");
-        Log.i("EDITAR", "" + editar);
-
         if (editar) {
             //cambiamos el título del ActionBar
             actionBar.setTitle("Editar Equipo");
@@ -249,7 +251,6 @@ public class RegistrarDatosActivity extends AppCompatActivity {
     }
 
     private boolean comprobarPermisosCamara() {
-
         boolean permisosCamara = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
         boolean permisosAlmacenamiento = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
         return permisosCamara && permisosAlmacenamiento;
@@ -263,7 +264,6 @@ public class RegistrarDatosActivity extends AppCompatActivity {
     }
 
     private boolean comprobarPermisosAlmacenamiento() {
-
         boolean permisos = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
         return permisos;
     }
@@ -318,8 +318,7 @@ public class RegistrarDatosActivity extends AppCompatActivity {
 
     }
 
-
-    //Función que comprime la imágen para subirla correctamente al servidor
+    //Función que comprime la imagen para subirla correctamente al servidor
     public String getStringImagen(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -495,9 +494,6 @@ public class RegistrarDatosActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
-
 
     //Función para cambiar el nombre del ActionBar y mostrar una opción de regreso al anterior activity
     public void FActionBar(){

@@ -115,6 +115,8 @@ public class RegistroActivity extends AppCompatActivity {
 
     }
 
+
+    //Función que comprueba que el email cumpla con los requisitos
     private boolean validarEmail(String email) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         return pattern.matcher(email).matches();
