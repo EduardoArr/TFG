@@ -51,9 +51,7 @@ public class IniciarSesionActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //FvalidarUsuario("http://192.168.11.71/inventario/validar_usuario.php");
-                Intent intent = new Intent(getApplicationContext(), ScrollingActivity.class);
-                startActivity(intent);
+                FvalidarUsuario("http://192.168.11.71/inventario/validar_usuario.php");
             }
         });
 
