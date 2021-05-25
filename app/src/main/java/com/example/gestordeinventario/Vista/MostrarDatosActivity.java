@@ -55,7 +55,6 @@ public class MostrarDatosActivity extends AppCompatActivity {
     final static String
     URL_WEB_SERVICE="http://192.168.11.71/inventario/lista_equipos.php";
 
-    ImageView imagen;
 
 
     @Override

@@ -339,6 +339,7 @@ public class RegistrarDatosActivity extends AppCompatActivity {
                         loading.dismiss();
                         //Mostrando el mensaje de la respuesta
                         Toast.makeText(RegistrarDatosActivity.this, s , Toast.LENGTH_LONG).show();
+                        onBackPressed();
                     }
                 },
                 new Response.ErrorListener() {
