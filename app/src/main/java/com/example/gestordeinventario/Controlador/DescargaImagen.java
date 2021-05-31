@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
     public class DescargaImagen extends AsyncTask<Void,Void,String> {
+
         Context c;
         String urlAddress;
         ListView lv;
@@ -57,6 +58,7 @@ import java.net.HttpURLConnection;
             }
             try
             {
+                //Recoje los datos de la base de datos y los almacena en un buffer
                 InputStream is=new BufferedInputStream(con.getInputStream());
                 BufferedReader br=new BufferedReader(new InputStreamReader(is));
                 String line;

@@ -17,8 +17,6 @@ import java.util.ArrayList;
         String jsonData;
         ListView listaEquipos;
         ProgressDialog pd;
-        public static final String
-                URL_IMAGENES = "http://192.168.1.41/inventario/imagenes/";
         ArrayList<Equipo> equipos =new ArrayList<>();
         public DataParser(Context c, String jsonData, ListView listaEquipos) {
             this.c = c;
@@ -54,11 +52,12 @@ import java.util.ArrayList;
             try
             {
                 JSONArray ja=new JSONArray(jsonData);
-                JSONObject jo=null;
+                JSONObject jo;
                 equipos.clear();
                 Equipo equipo;
                 for(int i=0;i<ja.length();i++)
                 {
+                    //Recojo los datos del JSON, lo almaceno en variables y luego inserto los datos en la clase Equipo y en un ArrayList
                     jo=ja.getJSONObject(i);
                     String tipo =jo.getString("tipo");
                     String id_equipo = jo.getString("id_equipo");

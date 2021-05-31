@@ -1,15 +1,11 @@
 package com.example.gestordeinventario.Vista;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.view.View;
 
 import android.widget.Button;
 
@@ -37,28 +33,11 @@ public class ScrollingActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
 
 
-            btnMostrarDatos.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FMostrarDatosIntent(null);
+            btnMostrarDatos.setOnClickListener(v -> FMostrarDatosIntent());
 
-                }
-            });
+            btnRegistrarEqipo.setOnClickListener((v -> FRegistrarEquipoIntent()));
 
-            btnRegistrarEqipo.setOnClickListener((new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FRegistrarEquipoIntent(null);
-
-                }
-            }));
-
-            btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FCerrarSesionIntent(null);
-                }
-            });
+            btnCerrarSesion.setOnClickListener(v -> FCerrarSesionIntent());
 
         } catch (Exception e) {
         e.printStackTrace();
@@ -66,7 +45,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     // Función que cambia al activity de Mostrar Datos
-    private void FMostrarDatosIntent(View v){
+    private void FMostrarDatosIntent(){
         try {
             Intent intent = new Intent(this, MostrarDatosActivity.class);
             startActivity(intent);
@@ -76,7 +55,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     // Función que cambia al activity de Registrar Equipo
-    private void FRegistrarEquipoIntent(View v){
+    private void FRegistrarEquipoIntent(){
         try {
             Intent intent = new Intent(this, RegistrarDatosActivity.class);
             intent.putExtra("REQUEST_EDICION", false);
@@ -88,7 +67,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     // Función que cambia al activity de Registrar Equipo
-    private void FCerrarSesionIntent(View v){
+    private void FCerrarSesionIntent(){
         try {
             Intent intent = new Intent(ScrollingActivity.this, IniciarSesionActivity.class);
             startActivity(intent);

@@ -7,31 +7,25 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -39,7 +33,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gestordeinventario.R;
-import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -47,7 +40,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -75,15 +67,17 @@ public class RegistrarDatosActivity extends AppCompatActivity {
 
     //Declaramos códigos que nos servirán para comprobar si la imagen viene de galería o de cámara
     private static final int PICK_CAMERA_CODE = 3;
-    private int PICK_IMAGE_REQUEST = 4;
+    private final int PICK_IMAGE_REQUEST = 4;
 
-    private String UPLOAD_URL ="http://192.168.11.71/inventario/insertar_equipo.php";
-    private String KEY_IMAGEN = "foto";
-    private String KEY_TIPO = "tipo";
-    private String KEY_AULA = "aula";
-    private String KEY_EDIFICIO = "edificio";
-    private String KEY_PUESTO = "puesto";
-    private String KEY_FECHA = "fecha_captura";
+    private final String UPLOAD_URL ="http://192.168.1.42/inventario/insertar_equipo.php";
+    private final String UPLOAD_URL2 = "http://192.168.1.42/inventario/editar_equipo.php";
+    private final String KEY_IMAGEN = "foto";
+    private final String KEY_IDEQUIPO = "id_equipo";
+    private final String KEY_TIPO = "tipo";
+    private final String KEY_AULA = "aula";
+    private final String KEY_EDIFICIO = "edificio";
+    private final String KEY_PUESTO = "puesto";
+    private final String KEY_FECHA = "fecha_captura";
 
     //Creamos arrays de permisos (el primero para cámara y almacenamiento y el segundo sólo para almacenamiento)
     private String[] cameraPermissions;
@@ -91,6 +85,7 @@ public class RegistrarDatosActivity extends AppCompatActivity {
 
 
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +105,7 @@ public class RegistrarDatosActivity extends AppCompatActivity {
 
         bundle = getIntent().getExtras();
         editar = bundle.getBoolean("REQUEST_EDICION");
-        Log.i("EDITAR", "" + editar);
+
 
         //Funciones
         FActionBar();
@@ -118,22 +113,14 @@ public class RegistrarDatosActivity extends AppCompatActivity {
         FEsEditar();
 
 
-        btnRegistrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!editar){
-                    uploadImage();
-                }else{
-                    FEditarEquipo("http://192.168.11.71/inventario/editar_equipo.php");
-                }
+        btnRegistrar.setOnClickListener(v -> {
+            if(editar){
+                FEditarEquipo();
+            }else{
+                uploadImage();
             }
         });
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarOpcionesImagen();
-            }
-        });
+        imageView.setOnClickListener(v -> mostrarOpcionesImagen());
     }
 
     private void FEsEditar(){
@@ -147,7 +134,6 @@ public class RegistrarDatosActivity extends AppCompatActivity {
             txt_aula = bundle.getString("aula");
             txt_puesto = bundle.getString("puesto");
             txt_edificio = bundle.getString("edificio");
-            txt_imagen = bundle.getString("imagen");
             txt_fecha = bundle.getString("fecha_captura");
 
             //y los muestro
@@ -195,10 +181,8 @@ public class RegistrarDatosActivity extends AppCompatActivity {
             if (txt_imagen == null) {
                 imageView.setImageResource(R.drawable.ic_baseline_add_a_photo_24);
                 //Cuando pinchamos en agregar imagen de libro
-
-            } else {
-                imageView.setImageURI(uri);
             }
+
         } else {
             //cambiamos el título dek ActionBar
             actionBar.setTitle("Registrar Equipo Nuevo");
@@ -213,35 +197,32 @@ public class RegistrarDatosActivity extends AppCompatActivity {
         //Creamos el AlertDialog con el texto de Selecccionar imagen y las dos opciones
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Seleccionar imagen");
-        builder.setItems(opciones, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //manejamos los click dependiendo de si el usuario elige galería o cámara
-                //el entero wich será cero si se elige la primera opción y 1 si se elige la segundaç
+        builder.setItems(opciones, (dialog, which) -> {
+            //manejamos los click dependiendo de si el usuario elige galería o cámara
+            //el entero wich será cero si se elige la primera opción y 1 si se elige la segunda
 
-                //Si hace click en cámara
-                if(which==0){
-                    //comprobamos si tiene los permisos de cámara
-                    //si no los tiene se los pedimos
-                    if(!comprobarPermisosCamara()){
-                        pedirPermisosCamara();
-                    }
-                    //si los tiene, vamos al método irCamara() para sacar la foto
-                    else{
-                        irCamara();
-                    }
+            //Si hace click en cámara
+            if(which==0){
+                //comprobamos si tiene los permisos de cámara
+                //si no los tiene se los pedimos
+                if(!comprobarPermisosCamara()){
+                    pedirPermisosCamara();
                 }
-                //Si hace click en galería
-                else if(which==1){
-                    //comprobamos si tiene los permisos de almacenamiento
-                    //si no los tiene se los pedimos
-                    if(!comprobarPermisosAlmacenamiento()){
-                        pedirPermisosAlmacenamiento();
-                    }
-                    //si los tiene, vamos al método irGaleria() para seleccionar la foto de galería
-                    else{
-                        showFileChooser();
-                    }
+                //si los tiene, vamos al método irCamara() para sacar la foto
+                else{
+                    irCamara();
+                }
+            }
+            //Si hace click en galería
+            else if(which==1){
+                //comprobamos si tiene los permisos de almacenamiento
+                //si no los tiene se los pedimos
+                if(!comprobarPermisosAlmacenamiento()){
+                    pedirPermisosAlmacenamiento();
+                }
+                //si los tiene, vamos al método irGaleria() para seleccionar la foto de galería
+                else{
+                    showFileChooser();
                 }
             }
         });
@@ -353,7 +334,7 @@ public class RegistrarDatosActivity extends AppCompatActivity {
                     }
                 }){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 //Convertir bits a cadena
                 String imagen = getStringImagen(bitmap);
 
@@ -365,7 +346,7 @@ public class RegistrarDatosActivity extends AppCompatActivity {
                 String fecha = fecha_captura;
 
                     //Creación de parámetros
-                    Map<String,String> params = new Hashtable<String, String>();
+                    Map<String,String> params = new Hashtable<>();
 
                     //Agregando de parámetros
                     params.put(KEY_IMAGEN, imagen);
@@ -388,30 +369,46 @@ public class RegistrarDatosActivity extends AppCompatActivity {
     }
 
     //Función que comprueba que el usuario y la contraseña esta correcto y si está correcto nos muestra el formulario principal.
-    private void FEditarEquipo(String URL){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+    private void FEditarEquipo(){
+        final ProgressDialog loading = ProgressDialog.show(this,"Subiendo...","Espere por favor...",false,false);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL2,
+                new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(RegistrarDatosActivity.this, "EQUIPO ELIMINADO CORRECTAMENTE", Toast.LENGTH_LONG).show();
+                //Descartar el diálogo de progreso
+                loading.dismiss();
+                Toast.makeText(RegistrarDatosActivity.this, "EQUIPO EDITADO CORRECTAMENTE", Toast.LENGTH_LONG).show();
+                onBackPressed();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                //Descartar el diálogo de progreso
+                loading.dismiss();
                 Toast.makeText(RegistrarDatosActivity.this, error.toString(), Toast.LENGTH_LONG).show();
             }
         }){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 //Creación de parámetros
-                Map<String,String> params = new Hashtable<String, String>();
+                Map<String,String> params = new Hashtable<>();
+
+                //Obtener el nombre de la imagen
+                String imagen = getStringImagen(bitmap);
+                String tipo = spTipo.getItemAtPosition(spTipo.getSelectedItemPosition()).toString();
+                String edificio = spEdificio.getItemAtPosition(spEdificio.getSelectedItemPosition()).toString();
+                String aula = spAula.getItemAtPosition(spAula.getSelectedItemPosition()).toString();
+                String puesto = spPuesto.getItemAtPosition(spPuesto.getSelectedItemPosition()).toString();
+                String fecha = fecha_captura;
 
                 //Agregando de parámetros
-                params.put(KEY_IMAGEN, txt_imagen);
-                params.put(KEY_TIPO, txt_tipo);
-                params.put(KEY_EDIFICIO, txt_edificio);
-                params.put(KEY_AULA, txt_aula);
-                params.put(KEY_PUESTO, txt_puesto);
-                params.put(KEY_FECHA, txt_fecha);
+                params.put(KEY_IDEQUIPO, txt_id);
+                params.put(KEY_IMAGEN, imagen);
+                params.put(KEY_TIPO, tipo);
+                params.put(KEY_EDIFICIO, edificio);
+                params.put(KEY_AULA, aula);
+                params.put(KEY_PUESTO, puesto);
+                params.put(KEY_FECHA, fecha);
 
                 //Parámetros de retorno
                 return params;

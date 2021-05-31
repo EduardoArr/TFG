@@ -16,7 +16,8 @@
             android:id="@+id/Imagen"
             android:layout_width="161dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_baseline_add_a_photo_24" />
+            android:src="@drawable/ic_baseline_add_a_photo_24"
+            android:contentDescription="TODO" />
 
         <LinearLayout
             android:layout_width="226dp"
@@ -31,28 +32,36 @@
                 android:id="@+id/txtTipo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/txtEdificio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/background_dark"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/txtAula"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/background_dark"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/txtPuesto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/background_dark"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/txtID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/background_dark"
+                android:textSize="15sp"
+                android:visibility="invisible" />
 
         </LinearLayout>
 
@@ -63,7 +72,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:background="@null"
-            android:src="@drawable/ic_baseline_more_vert_24" />
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:contentDescription="TODO" />
 
     </RelativeLayout>
 

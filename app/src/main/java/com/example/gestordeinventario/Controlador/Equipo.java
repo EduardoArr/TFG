@@ -1,6 +1,5 @@
 package com.example.gestordeinventario.Controlador;
 
-import com.android.volley.toolbox.StringRequest;
 
 public class Equipo {
     String codigo;
