@@ -6,12 +6,13 @@
         <item>Canon</item>
         <item>Teclado</item>
         <item>Raton</item>
+        <item>Impresora</item>
     </string-array>
 
     <string-array name="arrayEdificio">
         <item>Edificio 1</item>
         <item>Edificio 2</item>
-        <item>Edificio3</item>
+        <item>Edificio 3</item>
     </string-array>
 
     <string-array name="arrayAula">

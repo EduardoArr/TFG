@@ -115,7 +115,8 @@ public class RegistrarDatosActivity extends AppCompatActivity {
 
         btnRegistrar.setOnClickListener(v -> {
             if(editar){
-                FEditarEquipo();
+                FEditarEquipo(txt_id);
+                Log.i("hola", txt_id);
             }else{
                 uploadImage();
             }
@@ -178,10 +179,6 @@ public class RegistrarDatosActivity extends AppCompatActivity {
             int intPuesto = PuestoAdapter.getPosition(txt_puesto);
             spPuesto.setSelection(intPuesto);
 
-            if (txt_imagen == null) {
-                imageView.setImageResource(R.drawable.ic_baseline_add_a_photo_24);
-                //Cuando pinchamos en agregar imagen de libro
-            }
 
         } else {
             //cambiamos el título dek ActionBar
@@ -369,7 +366,7 @@ public class RegistrarDatosActivity extends AppCompatActivity {
     }
 
     //Función que comprueba que el usuario y la contraseña esta correcto y si está correcto nos muestra el formulario principal.
-    private void FEditarEquipo(){
+    private void FEditarEquipo(String id){
         final ProgressDialog loading = ProgressDialog.show(this,"Subiendo...","Espere por favor...",false,false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL2,
                 new Response.Listener<String>() {
@@ -402,7 +399,7 @@ public class RegistrarDatosActivity extends AppCompatActivity {
                 String fecha = fecha_captura;
 
                 //Agregando de parámetros
-                params.put(KEY_IDEQUIPO, txt_id);
+                params.put(KEY_IDEQUIPO, id);
                 params.put(KEY_IMAGEN, imagen);
                 params.put(KEY_TIPO, tipo);
                 params.put(KEY_EDIFICIO, edificio);
