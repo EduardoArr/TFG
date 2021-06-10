@@ -17,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -69,8 +70,8 @@ public class RegistrarDatosActivity extends AppCompatActivity {
     private static final int PICK_CAMERA_CODE = 3;
     private final int PICK_IMAGE_REQUEST = 4;
 
-    private final String UPLOAD_URL ="http://192.168.1.42/inventario/insertar_equipo.php";
-    private final String UPLOAD_URL2 = "http://192.168.1.42/inventario/editar_equipo.php";
+    private final String UPLOAD_URL ="http://192.168.1.45/inventario/insertar_equipo.php";
+    private final String UPLOAD_URL2 = "http://192.168.1.45/inventario/editar_equipo.php";
     private final String KEY_IMAGEN = "foto";
     private final String KEY_IDEQUIPO = "id_equipo";
     private final String KEY_TIPO = "tipo";
@@ -298,11 +299,16 @@ public class RegistrarDatosActivity extends AppCompatActivity {
 
     //Función que comprime la imagen para subirla correctamente al servidor
     public String getStringImagen(Bitmap bmp){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
+        try{
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] imageBytes = baos.toByteArray();
+            String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+            return encodedImage;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     //Función que sube los datos al servidor.
@@ -341,6 +347,7 @@ public class RegistrarDatosActivity extends AppCompatActivity {
                 String aula = spAula.getItemAtPosition(spAula.getSelectedItemPosition()).toString();
                 String puesto = spPuesto.getItemAtPosition(spPuesto.getSelectedItemPosition()).toString();
                 String fecha = fecha_captura;
+
 
                     //Creación de parámetros
                     Map<String,String> params = new Hashtable<>();

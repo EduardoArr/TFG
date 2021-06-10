@@ -15,14 +15,15 @@ import java.util.ArrayList;
     public class DataParser extends AsyncTask<Void,Void,Integer> {
         Context c;
         String jsonData;
-        ListView listaEquipos;
+        ListView listaView;
         ProgressDialog pd;
         ArrayList<Equipo> equipos =new ArrayList<>();
-        public DataParser(Context c, String jsonData, ListView listaEquipos) {
+        public DataParser(Context c, String jsonData, ListView listaView) {
             this.c = c;
             this.jsonData = jsonData;
-            this.listaEquipos = listaEquipos;
+            this.listaView = listaView;
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -44,7 +45,7 @@ import java.util.ArrayList;
                 Toast.makeText(c,"No se puede analizar", Toast.LENGTH_SHORT).show();
             }else {
                 EquipoAdapter adapter=new EquipoAdapter(c, equipos);
-                listaEquipos.setAdapter(adapter);
+                listaView.setAdapter(adapter);
             }
         }
         private int parseData()
@@ -77,6 +78,8 @@ import java.util.ArrayList;
                     equipo.setFecha(fecha_captura);
                     equipo.setUrl(imagen);
                     equipos.add(equipo);
+
+
                 }
                 return 1;
             } catch (JSONException e) {

@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -11,8 +13,10 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.gestordeinventario.Controlador.Usuario;
 import com.example.gestordeinventario.R;
 
 import java.util.HashMap;
@@ -23,6 +27,7 @@ public class IniciarSesionActivity extends AppCompatActivity {
     EditText edtUsuario, edtPassw;
     Button btnLogin;
     Button btnRegistro;
+    private final String UPLOAD_URL ="http://192.168.1.45/inventario/validar_usuario.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +49,7 @@ public class IniciarSesionActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnRegistro = findViewById(R.id.btnRegistrarse);
 
-        btnLogin.setOnClickListener(v -> FvalidarUsuario("http://192.168.1.42/inventario/validar_usuario.php"));
-
+        btnLogin.setOnClickListener(v -> FvalidarUsuario());
         btnRegistro.setOnClickListener(v -> FIntentRegistro());
     }
 
@@ -56,16 +60,17 @@ public class IniciarSesionActivity extends AppCompatActivity {
     }
 
     //Función que comprueba que el usuario y la contraseña esta correcto y si está correcto nos muestra el formulario principal.
-    private void FvalidarUsuario(String URL){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, response -> {
-
-            if(!response.isEmpty()){
-                Intent intent = new Intent(getApplicationContext(), ScrollingActivity.class);
-                startActivity(intent);
-            }else{
-                Toast.makeText(IniciarSesionActivity.this, "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
+    private void FvalidarUsuario(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(!response.isEmpty()){
+                    Intent intent = new Intent(getApplicationContext(), ScrollingActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(IniciarSesionActivity.this, "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
+                }
             }
-
         }, error -> Toast.makeText(IniciarSesionActivity.this, error.toString(), Toast.LENGTH_LONG).show()){
             @Override
             protected Map<String, String> getParams() {
@@ -79,4 +84,5 @@ public class IniciarSesionActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
 }

@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.widget.Button;
 
+import com.example.gestordeinventario.Controlador.Usuario;
 import com.example.gestordeinventario.R;
 
 public class ScrollingActivity extends AppCompatActivity {
@@ -17,7 +18,6 @@ public class ScrollingActivity extends AppCompatActivity {
     Button btnCerrarSesion;
     Button btnRegistrarEqipo;
     Button btnMostrarDatos;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,7 @@ public class ScrollingActivity extends AppCompatActivity {
         try {
             Intent intent = new Intent(this, MostrarDatosActivity.class);
             startActivity(intent);
+
         }catch (Exception e){
             e.printStackTrace();
         }

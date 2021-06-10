@@ -2,11 +2,19 @@
 <resources>
     <string-array name="arrayTipo">
         <item>Ordenador</item>
-        <item>Pantalla</item>
+        <item>Monitor</item>
         <item>Canon</item>
         <item>Teclado</item>
         <item>Raton</item>
-        <item>Impresora</item>
+    </string-array>
+
+    <string-array name="arrayFiltro">
+        <item>Ordenador</item>
+        <item>Monitor</item>
+        <item>Canon</item>
+        <item>Teclado</item>
+        <item>Raton</item>
+        <item>Todo</item>
     </string-array>
 
     <string-array name="arrayEdificio">

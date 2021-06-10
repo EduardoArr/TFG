@@ -31,7 +31,7 @@ public class RegistroActivity extends AppCompatActivity {
     Button btnRegistrarNuevo;
     ActionBar actionBar;
 
-    private final String UPLOAD_URL ="http://192.168.1.42/inventario/insertar_usuario.php";
+    private final String UPLOAD_URL ="http://192.168.1.45/inventario/insertar_usuario.php";
     private final String KEY_USUARIO = "email";
     private final String KEY_CONTRASEÑA = "password";
 
@@ -60,12 +60,9 @@ public class RegistroActivity extends AppCompatActivity {
             final ProgressDialog loading = ProgressDialog.show(this,"REGISTRANDO...","Espere por favor...",false,false);
             StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
                     s -> {
-
                         //Descartar el diálogo de progreso
                         loading.dismiss();
-                        //Mostrando el mensaje de la respuesta
-                        Toast.makeText(RegistroActivity.this, "EQUIPO EDITADO CORRECTAMENTE", Toast.LENGTH_LONG).show();
-                        onBackPressed();
+                        Toast.makeText(RegistroActivity.this, s , Toast.LENGTH_LONG).show();
                     },
                     volleyError -> {
                         //Descartar el diálogo de progreso

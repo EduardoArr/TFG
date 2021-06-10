@@ -1,6 +1,8 @@
 package com.example.gestordeinventario.Controlador;
 
 
+import java.util.ArrayList;
+
 public class Equipo {
     String codigo;
     String tipo;
