@@ -34,7 +34,7 @@ public class MostrarDatosActivity extends AppCompatActivity {
     //Variables
     ActionBar actionBar;
     final static String
-    URL_WEB_SERVICE="http://192.168.1.45/inventario/";
+    URL_WEB_SERVICE="http://192.168.43.68/inventario/";
     String tipo;
     ListView lv;
 

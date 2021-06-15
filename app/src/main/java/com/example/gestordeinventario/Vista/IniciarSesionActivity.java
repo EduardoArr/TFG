@@ -27,7 +27,7 @@ public class IniciarSesionActivity extends AppCompatActivity {
     EditText edtUsuario, edtPassw;
     Button btnLogin;
     Button btnRegistro;
-    private final String UPLOAD_URL ="http://192.168.1.45/inventario/validar_usuario.php";
+    private final String UPLOAD_URL ="http://192.168.43.68/inventario/validar_usuario.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

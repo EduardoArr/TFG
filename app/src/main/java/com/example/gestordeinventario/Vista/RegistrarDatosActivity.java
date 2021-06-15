@@ -70,8 +70,8 @@ public class RegistrarDatosActivity extends AppCompatActivity {
     private static final int PICK_CAMERA_CODE = 3;
     private final int PICK_IMAGE_REQUEST = 4;
 
-    private final String UPLOAD_URL ="http://192.168.1.45/inventario/insertar_equipo.php";
-    private final String UPLOAD_URL2 = "http://192.168.1.45/inventario/editar_equipo.php";
+    private final String UPLOAD_URL ="http://192.168.43.68/inventario/insertar_equipo.php";
+    private final String UPLOAD_URL2 = "http://192.168.43.68/inventario/editar_equipo.php";
     private final String KEY_IMAGEN = "foto";
     private final String KEY_IDEQUIPO = "id_equipo";
     private final String KEY_TIPO = "tipo";
@@ -381,7 +381,7 @@ public class RegistrarDatosActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 //Descartar el diálogo de progreso
                 loading.dismiss();
-                Toast.makeText(RegistrarDatosActivity.this, "EQUIPO EDITADO CORRECTAMENTE", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegistrarDatosActivity.this, response , Toast.LENGTH_LONG).show();
                 onBackPressed();
             }
         }, new Response.ErrorListener() {

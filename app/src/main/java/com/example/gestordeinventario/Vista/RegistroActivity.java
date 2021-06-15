@@ -31,7 +31,7 @@ public class RegistroActivity extends AppCompatActivity {
     Button btnRegistrarNuevo;
     ActionBar actionBar;
 
-    private final String UPLOAD_URL ="http://192.168.1.45/inventario/insertar_usuario.php";
+    private final String UPLOAD_URL ="http://192.168.43.68/inventario/insertar_usuario.php";
     private final String KEY_USUARIO = "email";
     private final String KEY_CONTRASEÑA = "password";
 

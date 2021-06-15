@@ -137,7 +137,7 @@ public class EquipoAdapter extends BaseAdapter{
                 AlertDialog.Builder eliminarDialogo = new AlertDialog.Builder(c);
                 eliminarDialogo.setTitle("Eliminarás un equipo");
                 eliminarDialogo.setMessage("¿Estás seguro de eliminarlo?");
-                eliminarDialogo.setPositiveButton("Sí", (dialog1, which1) -> FBorrarEquipo(id_equipo, "http://192.168.1.45/inventario/borrar_equipo.php"));
+                eliminarDialogo.setPositiveButton("Sí", (dialog1, which1) -> FBorrarEquipo(id_equipo, "http://192.168.43.68/inventario/borrar_equipo.php"));
                 eliminarDialogo.setNegativeButton("No", null);
                 eliminarDialogo.create().show();
 
